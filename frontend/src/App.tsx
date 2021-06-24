@@ -2,28 +2,18 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import ApiTest from './components/apiTest';
-import FeatureBox from './components/featureBox';
+import FeatureList from './components/features/featureList';
+import FeatureInput from './components/featureInput/featureInput';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
 
       <div>Res: <ApiTest />
-        <FeatureBox />
+        <FeatureInput />
+        <FeatureList />
+
       </div>
     </div>
   );
