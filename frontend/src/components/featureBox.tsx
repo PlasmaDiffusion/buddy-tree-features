@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
+import Feature from "./feature/feature";
+
 
 function FeatureBox()
 {
-    return <React.Fragment></React.Fragment>
+    let [features, setFeatures]= useState([]);
+
+    return <React.Fragment><Feature /></React.Fragment>
 }
 
 export default FeatureBox;
