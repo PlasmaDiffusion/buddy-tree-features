@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import ApiTest from './components/apiTest';
+import FeatureBox from './components/featureBox';
 
 function App() {
   return (
@@ -21,7 +22,9 @@ function App() {
         </a>
       </header>
 
-      <div>Res: <ApiTest /></div>
+      <div>Res: <ApiTest />
+        <FeatureBox />
+      </div>
     </div>
   );
 }
