@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import ApiTest from './components/apiTest';
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
           Learn React
         </a>
       </header>
+
+      <div>Res: <ApiTest /></div>
     </div>
   );
 }
