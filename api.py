@@ -7,9 +7,8 @@ import os
 app = Flask(__name__)
 
 # Enable CORS while testing
-if os.environ['FLASK_ENV'] == "development":
-    cors = CORS(app)
-    app.config['CORS_HEADERS'] = 'Content-Type'
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 @app.route('/api/test')
