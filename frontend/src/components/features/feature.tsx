@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from "react";
 
+//A feature component shows the feature, the vote button and vote count
+
 interface Props{
-    feature: string,
-    votes: number,
+    feature: {
+        id: number,
+        description: string,
+        votes: number,
+        userVoted: boolean,
+    }
+    onVote: (id:number)=>void;
 }
 
 function Feature(props: Props) {
 
-    function updateVote(){
-
-    }
 
     return <React.Fragment>
         <div>
-            <p>{props.feature}</p><button className="voteBtn" onClick={updateVote}>👍</button> <p>{props.votes}</p>
+            <p>{props.feature.description}</p>
+            <button className={props.feature.userVoted ? "voteBtnVoted"  : "voteBtn"}
+                onClick={()=>{props.onVote(props.feature.id)}}>
+            👍
+            </button>
+            <p>{props.feature.votes}</p>
         </div>
     </React.Fragment>
 

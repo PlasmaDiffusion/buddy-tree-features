@@ -3,3 +3,8 @@
   border: none;
   background: none;
 }
+
+.voteBtnVoted {
+  @extend .voteBtn;
+  color: blue;
+}
