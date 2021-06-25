@@ -66,7 +66,7 @@ def voteForFeature():
         user = data.get("user")
         print(featureId)
         print(user)
-        if featureId is None or user is None:
+        if featureId is None or user is None or user == "":
             return f"Error voting. Didn't get all values."
 
         featureManager = FeatureManager(user)
@@ -77,12 +77,13 @@ def voteForFeature():
         if userHasVoted:
             # Unvote
             feature.votes -= 1
-            feature.usersVoted.remove(user)
+            stringToReplace = feature.usersVoted
+            stringToReplace.replace(user+",", "")
             userHasVoted = False
         else:
             # Vote
             feature.votes += 1
-            feature.usersVoted.append(user)
+            feature.usersVoted += user+""
             userHasVoted = True
 
         db.session.commit()

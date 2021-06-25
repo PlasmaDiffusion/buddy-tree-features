@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Feature from "./feature";
-import  {getUrl} from "../../services/getUrl"
+import  {getUrl, getUserFromURL} from "../../services/getUrl"
 import axios from "axios";
 import "./feature.scss";
 import FeatureInput from "../featureInput/featureInput";
@@ -15,7 +15,7 @@ function FeatureList()
         getAllFeatures()
     }, [])
 
-    
+    //Use axios to send a get request of all features
     function getAllFeatures(){
         axios.get(getUrl() +"getFeatures")
         .then(res  => {
@@ -24,26 +24,24 @@ function FeatureList()
         })
     }
 
+    //Vote (or unvote) for a feature
     function updateVotes(featureID: number, index: number)
     {
-
-        //Get the user (simulated through url)
-        const url = window.location.href;
-        let params = url.split("/");
-        let user = params[params.length-1];
+        let user = getUserFromURL();
+        if (user=="") return
+        
 
         axios.post(getUrl() +"voteForFeature", {id:featureID, user:user})
         .then(res  => {
-
+            //Server should return list of features with the updated votes
             setFeatures(res.data["features"]);
         })
-
         
     }
 
     return <React.Fragment>
         <FeatureInput onEntered={getAllFeatures} />
-        {features.length>0 ? features.map( (featureObj, index) =>(
+        {features ? features.map( (featureObj, index) =>(
             <Feature feature={featureObj} key={"Feature_"+index} index={index} onVote={updateVotes} />
             
         )) : ""}

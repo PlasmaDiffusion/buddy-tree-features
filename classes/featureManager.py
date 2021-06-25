@@ -5,7 +5,7 @@ from models import FeatureModel
 
 class FeatureManager():
 
-    def __init__(self, user=-1):
+    def __init__(self, user=None):
         self.user = user
 
     def getAllFeatures(self):
