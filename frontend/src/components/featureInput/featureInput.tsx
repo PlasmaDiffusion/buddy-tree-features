@@ -22,7 +22,7 @@ function FeatureInput()
     return <React.Fragment>
         <p>What new feature would you like us to add to Buddytree?</p>
         <form onSubmit={addFeature}>
-           <textarea rows={2} onChange={onChangeInput} required></textarea>
+           <textarea name="feature" rows={2} onChange={onChangeInput} required></textarea>
             <input type="submit" />
         </form>
     </React.Fragment>
