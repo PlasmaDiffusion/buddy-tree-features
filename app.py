@@ -2,7 +2,6 @@ from flask import Flask, send_from_directory, request
 from flask_cors import CORS  # Comment on deployment
 from flask_migrate import Migrate
 from models import db, FeatureModel
-import pprint
 
 app = Flask((__name__), static_url_path='', static_folder='frontend/build')
 CORS(app)  # Comment on deployment/uncomment when testing locally
@@ -36,5 +35,13 @@ def addFeature():
 def getFeatures():
 
     if request.method == 'GET':
+        features = FeatureModel.query.all()
 
-        return "Get features"
+        # Make a new array to be JSONified properly
+        featuresJSON = []
+
+        for feature in features:
+            print(feature.description)
+            featuresJSON.append({"description": feature.description,
+                                "votes": feature.votes, "usersVoted": feature.usersVoted})
+        return {"features": featuresJSON}

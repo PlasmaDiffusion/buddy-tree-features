@@ -1,26 +1,22 @@
 import React, { useEffect, useState } from "react";
 import Feature from "./feature";
+import  {getUrl} from "../../services/getUrl"
+import axios from "axios";
 import "./feature.scss";
 
 //Read all features from the api and render them
 function FeatureList()
 {
-    let [features, setFeatures]= useState([
-        {
-        id: 0,
-        description: "Some feature",
-        votes: 1,
-        userVoted:true
-        },
-        {
-        id: 1,
-        description: "Another feature",
-        votes: 12,
-        userVoted:false
-        }
-    ]);
+    let [features, setFeatures]= useState([]);
 
     useEffect(()=>{
+
+        axios.get(getUrl() +"getFeatures")
+        .then(res  => {
+            console.log("Data", res.data["features"]);
+            setFeatures(res.data["features"]);
+        })
+
 
     }, [])
 
@@ -34,10 +30,10 @@ function FeatureList()
     }
 
     return <React.Fragment>
-        {features.map( (featureObj, index) =>(
+        {features ? features.map( (featureObj, index) =>(
             <Feature feature={featureObj} onVote={updateVotes} />
             
-        ))}
+        )) : ""}
         
         </React.Fragment>
 }
