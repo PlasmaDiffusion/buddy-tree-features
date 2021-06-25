@@ -11,7 +11,7 @@ class FeatureModel(db.Model):
     votes = db.Column(db.Integer())
 
     # Array that contains users(numbers) that voted. If the user isn't in the array, they didn't vote for it.
-    usersVoted = db.Column(db.Array(db.Integer()))
+    usersVoted = db.Column(db.ARRAY(db.Integer()))
 
     def __init__(self, description):
         self.description = description

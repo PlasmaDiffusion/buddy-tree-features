@@ -1,13 +1,10 @@
 from flask import Flask, send_from_directory
-from flask_restful import Api, Resource, reqparse
 from flask_cors import CORS  # Comment on deployment
-from api.ApiHandler import ApiHandler
-from models import db, FeatureModel
+from models.featureModel import db, FeatureModel
 
 
 app = Flask(__name__, static_url_path='', static_folder='frontend/build')
 CORS(app)  # Comment on deployment
-api = Api(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:<password>@<server>:5432/buddytree"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -19,7 +16,7 @@ def serve(path):
 
 
 @app.route('/addFeature', methods=['POST'])
-def login():
+def addFeature():
 
     if request.method == 'POST':
         newDescription = request.form['feature']
@@ -30,11 +27,8 @@ def login():
 
 
 @app.route('/getFeatures', methods=['GET'])
-def login():
+def getFeatures():
 
     if request.method == 'GET':
 
         return "Get features"
-
-
-api.add_resource(ApiHandler, '/api/test')
