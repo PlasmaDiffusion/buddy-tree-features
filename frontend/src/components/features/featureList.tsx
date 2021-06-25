@@ -3,6 +3,8 @@ import Feature from "./feature";
 import  {getUrl} from "../../services/getUrl"
 import axios from "axios";
 import "./feature.scss";
+import FeatureInput from "../featureInput/featureInput";
+
 
 //Read all features from the api and render them
 function FeatureList()
@@ -10,15 +12,17 @@ function FeatureList()
     let [features, setFeatures]= useState([]);
 
     useEffect(()=>{
+        getAllFeatures()
+    }, [])
 
+    
+    function getAllFeatures(){
         axios.get(getUrl() +"getFeatures")
         .then(res  => {
             console.log("Data", res.data["features"]);
             setFeatures(res.data["features"]);
         })
-
-
-    }, [])
+    }
 
     function updateVotes(id: number)
     {
@@ -30,7 +34,8 @@ function FeatureList()
     }
 
     return <React.Fragment>
-        {features ? features.map( (featureObj, index) =>(
+        <FeatureInput onEntered={getAllFeatures} />
+        {features.length>0 ? features.map( (featureObj, index) =>(
             <Feature feature={featureObj} onVote={updateVotes} />
             
         )) : ""}

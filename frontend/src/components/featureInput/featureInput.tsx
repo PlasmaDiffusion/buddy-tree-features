@@ -2,7 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {getUrl} from "../../services/getUrl"
 
-function FeatureInput()
+
+interface Props{
+    onEntered: ()=>void;
+}
+
+//Render an input form, and submit a feature with a post request
+function FeatureInput(props:Props)
 {
     let [feature, setFeature]= useState("");
 
@@ -14,16 +20,16 @@ function FeatureInput()
 
     function addFeature(e: React.FormEvent<HTMLFormElement>)
     {
-        
         e.preventDefault();
-
+        
         if (feature == "") return;
 
-        //Connect to the data base to add the feature
+        //Send the new feature to the database
         axios.post(getUrl() +"addFeature", {description:feature})
             .then(res  => {
-                console.log(res);
+                //Clear the form and update the request without refreshing
                 setFeature("");
+                props.onEntered();
             })
 
     }
