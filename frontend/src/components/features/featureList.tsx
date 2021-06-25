@@ -28,9 +28,22 @@ function FeatureList()
     {
         alert("Voting for " + id);
 
-        //TO DO: Connect to server to change vote for the user (check the url)
+        //Get the user (simulated through url)
+        const url = window.location.href;
+        let params = url.split("/");
+        let user = params[params.length-1];
+        alert(user);
+
+        // axios.post(getUrl() +"addFeature", {description:feature})
+        // .then(res  => {
+        //     //Clear the form and update the request without refreshing
+        //     setFeature("");
+        //     props.onEntered();
+        // })
 
         //Use response for number of votes and whether or not the user voted
+        let modifiedFeatures = [...features];
+        
     }
 
     return <React.Fragment>
