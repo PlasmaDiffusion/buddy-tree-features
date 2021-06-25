@@ -24,32 +24,27 @@ function FeatureList()
         })
     }
 
-    function updateVotes(id: number)
+    function updateVotes(featureID: number, index: number)
     {
-        alert("Voting for " + id);
 
         //Get the user (simulated through url)
         const url = window.location.href;
         let params = url.split("/");
         let user = params[params.length-1];
-        alert(user);
 
-        // axios.post(getUrl() +"addFeature", {description:feature})
-        // .then(res  => {
-        //     //Clear the form and update the request without refreshing
-        //     setFeature("");
-        //     props.onEntered();
-        // })
+        axios.post(getUrl() +"voteForFeature", {id:featureID, user:user})
+        .then(res  => {
 
-        //Use response for number of votes and whether or not the user voted
-        let modifiedFeatures = [...features];
+            setFeatures(res.data["features"]);
+        })
+
         
     }
 
     return <React.Fragment>
         <FeatureInput onEntered={getAllFeatures} />
         {features.length>0 ? features.map( (featureObj, index) =>(
-            <Feature feature={featureObj} onVote={updateVotes} />
+            <Feature feature={featureObj} key={"Feature_"+index} index={index} onVote={updateVotes} />
             
         )) : ""}
         

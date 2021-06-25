@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 //A feature component shows the feature, the vote button and vote count
 
@@ -9,7 +9,8 @@ interface Props{
         votes: number,
         userVoted: boolean,
     }
-    onVote: (id:number)=>void;
+    index: number;
+    onVote: (featureID:number, index:number)=>void;
 }
 
 function Feature(props: Props) {
@@ -19,7 +20,7 @@ function Feature(props: Props) {
         <div>
             <p>{props.feature.description}</p>
             <button className={props.feature.userVoted ? "voteBtnVoted"  : "voteBtn"}
-                onClick={()=>{props.onVote(props.feature.id)}}>
+                onClick={()=>{props.onVote(props.feature.id, props.index)}}>
             👍
             </button>
             <p>{props.feature.votes}</p>

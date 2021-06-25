@@ -2,6 +2,7 @@ from flask import Flask, send_from_directory, request
 from flask_cors import CORS
 from flask_migrate import Migrate
 from models import db, FeatureModel
+from classes.featureManager import FeatureManager
 
 app = Flask((__name__), static_url_path='', static_folder='frontend/build')
 CORS(app)  # Comment CORS on deployment, or uncomment when testing locally
@@ -23,15 +24,11 @@ def serve(path):
 @ app.route('/addFeature', methods=['POST'])
 def addFeature():
 
-    data = request.get_json(silent=True)
-
     if request.method == 'POST':
-        newDescription = data.get("description")
-        new_feature = FeatureModel(description=newDescription)
-        db.session.add(new_feature)
-        db.session.commit()
-        return f"Feature Request Added!"
-    return f""
+
+        data = request.get_json(silent=True)
+        featureManager = FeatureManager()
+        return featureManager.addFeature(data, db)
 
 
 # Get all features from the FeatureList component
@@ -39,17 +36,21 @@ def addFeature():
 def getFeatures():
 
     if request.method == 'GET':
-        features = FeatureModel.query.all()
 
-        # Make a new array to be JSONified properly
-        featuresJSON = []
+        featureManager = FeatureManager()
 
-        for feature in features:
-            print(feature.description)
-            featuresJSON.append({"id": feature.id, "description": feature.description,
-                                "votes": feature.votes, "usersVoted": feature.usersVoted})
-        return {"features": featuresJSON}
-    return f""
+        return {"features": featureManager.getAllFeatures()}
+
+
+# Same as above but without a user "signed in"
+@ app.route('/getFeatures/<int:user>', methods=['GET'])
+def getFeaturesWithUsersVotes(user):
+
+    if request.method == 'GET':
+
+        featureManager = FeatureManager(user)
+
+        return {"features": featureManager.getAllFeatures(user)}
 
 
 # Vote from the Feature component using feature id and user#
@@ -63,9 +64,12 @@ def voteForFeature():
         # Get request data, and make sure it's all there
         featureId = data.get("id")
         user = data.get("user")
-
+        print(featureId)
+        print(user)
         if featureId is None or user is None:
             return f"Error voting. Didn't get all values."
+
+        featureManager = FeatureManager(user)
 
         # Find the feature and check if the user voted for it prior
         feature = FeatureModel.query.filter_by(id=featureId).first()
@@ -83,6 +87,4 @@ def voteForFeature():
 
         db.session.commit()
 
-        return {"votes": feature.votes, "userVoted": userHasVoted}
-
-    return f""
+        return {"features": featureManager.getAllFeatures()}
