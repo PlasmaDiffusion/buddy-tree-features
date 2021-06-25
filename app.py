@@ -22,10 +22,10 @@ def serve(path):
 @ app.route('/addFeature', methods=['POST'])
 def addFeature():
 
-    pprint.pformat(request.environ, depth=5)
+    data = request.get_json(silent=True)
 
     if request.method == 'POST':
-        newDescription = request.form['description']
+        newDescription = data.get("description")
         new_feature = FeatureModel(description=newDescription)
         db.session.add(new_feature)
         db.session.commit()

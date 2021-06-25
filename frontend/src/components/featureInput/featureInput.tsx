@@ -14,7 +14,7 @@ function FeatureInput()
 
     function addFeature(e: React.FormEvent<HTMLFormElement>)
     {
-
+        
         e.preventDefault();
 
         if (feature == "") return;
