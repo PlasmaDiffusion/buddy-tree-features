@@ -5,6 +5,7 @@ from models import FeatureModel
 
 class FeatureManager():
 
+    # Set the user while creating this class (Required only for getAllFeatures or voteForFeature)
     def __init__(self, user=None):
         self.user = user
 
@@ -29,6 +30,7 @@ class FeatureManager():
 
         return featuresJSON
 
+    # Pass in request data to add a new feature to the database
     def addFeature(self, data, db):
         newDescription = data.get("description")
         new_feature = FeatureModel(description=newDescription)

@@ -78,13 +78,11 @@ def voteForFeature():
             # Unvote
             feature.votes -= 1
             stringToReplace = feature.usersVoted
-            stringToReplace.replace(user+",", "")
-            userHasVoted = False
+            feature.usersVoted = stringToReplace.replace(user+",", "")
         else:
             # Vote
             feature.votes += 1
-            feature.usersVoted += user+""
-            userHasVoted = True
+            feature.usersVoted += user+","
 
         db.session.commit()
 
