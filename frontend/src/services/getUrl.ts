@@ -15,7 +15,7 @@ let user = params[params.length-1];
 
 
 //Tell user to login if the argument was passed in
-if ((user=="" || user == null) && showUserPrompt) alert("Only users can vote for features.");
+if ((user=="" || user == null) && showUserPrompt) alert("Only users can vote for or add features.");
 return user;
 
 }
