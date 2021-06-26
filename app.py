@@ -20,6 +20,21 @@ def serve(path):
     return send_from_directory(app.static_folder, 'index.html')
 
 
+# Get all features from the FeatureList component
+@ app.route('/getFeatures', methods=['GET'])
+@ app.route('/getFeatures/<user>', methods=['GET'])
+def getFeaturesWithUsersVotes(user=None):
+
+    if request.method == 'GET':
+
+        if user is not None:
+            featureManager = FeatureManager(user)
+            return {"features": featureManager.getAllFeatures()}
+        else:
+            featureManager = FeatureManager()
+            return {"features": featureManager.getAllFeatures()}
+
+
 # Post a feature from the FeatureInput component
 @ app.route('/addFeature', methods=['POST'])
 def addFeature():
@@ -31,59 +46,20 @@ def addFeature():
         return featureManager.addFeature(data, db)
 
 
-# Get all features from the FeatureList component
-@ app.route('/getFeatures', methods=['GET'])
-def getFeatures():
-
-    if request.method == 'GET':
-
-        featureManager = FeatureManager()
-
-        return {"features": featureManager.getAllFeatures()}
-
-
-# Same as above but without a user "signed in"
-@ app.route('/getFeatures/<int:user>', methods=['GET'])
-def getFeaturesWithUsersVotes(user):
-
-    if request.method == 'GET':
-
-        featureManager = FeatureManager(user)
-
-        return {"features": featureManager.getAllFeatures(user)}
-
-
 # Vote from the Feature component using feature id and user#
 @ app.route('/voteForFeature', methods=['POST'])
 def voteForFeature():
 
-    data = request.get_json(silent=True)
-
     if request.method == 'POST':
 
         # Get request data, and make sure it's all there
+        data = request.get_json(silent=True)
         featureId = data.get("id")
         user = data.get("user")
-        print(featureId)
-        print(user)
         if featureId is None or user is None or user == "":
-            return f"Error voting. Didn't get all values."
+            return f"Error voting. Didn't get id and user."
 
         featureManager = FeatureManager(user)
-
-        # Find the feature and check if the user voted for it prior
-        feature = FeatureModel.query.filter_by(id=featureId).first()
-        userHasVoted = user in feature.usersVoted
-        if userHasVoted:
-            # Unvote
-            feature.votes -= 1
-            stringToReplace = feature.usersVoted
-            feature.usersVoted = stringToReplace.replace(user+",", "")
-        else:
-            # Vote
-            feature.votes += 1
-            feature.usersVoted += user+","
-
-        db.session.commit()
+        featureManager.voteForFeature(featureId, db)
 
         return {"features": featureManager.getAllFeatures()}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {getUrl} from "../../services/getUrl"
+import {getServerURL} from "../../services/getUrl"
 
 
 interface Props{
@@ -25,7 +25,7 @@ function FeatureInput(props:Props)
         if (feature == "") return;
 
         //Send the new feature to the database
-        axios.post(getUrl() +"addFeature", {description:feature})
+        axios.post(getServerURL() +"addFeature", {description:feature})
             .then(res  => {
                 //Clear the form and update the request without refreshing
                 setFeature("");

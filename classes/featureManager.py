@@ -5,7 +5,7 @@ from models import FeatureModel
 
 class FeatureManager():
 
-    # Set the user while creating this class (Required only for getAllFeatures or voteForFeature)
+    # Set the user while creating this class (Required to call voteForFeature)
     def __init__(self, user=None):
         self.user = user
 
@@ -19,7 +19,9 @@ class FeatureManager():
         for feature in features:
             print(feature.description)
 
-            # Also check if the user voted, or check for nothing if no user was given
+            print(self.user, "", feature.usersVoted)
+
+            # While getting the feature, check if the user voted, or don't if no user was given
             if self.user:
                 featuresJSON.append({"id": feature.id, "description": feature.description,
                                      "votes": feature.votes, "userVoted": self.user in feature.usersVoted})
@@ -32,8 +34,30 @@ class FeatureManager():
 
     # Pass in request data to add a new feature to the database
     def addFeature(self, data, db):
+        if data == None or db == None:
+            return f"Missing data or db"
+
         newDescription = data.get("description")
         new_feature = FeatureModel(description=newDescription)
         db.session.add(new_feature)
         db.session.commit()
         return f"Feature Request Added!"
+
+    def voteForFeature(self, featureId, db):
+        if (self.user == None):
+            return f"User not set in feature manager"
+
+        # Find the feature and check if the user voted for it prior
+        feature = FeatureModel.query.filter_by(id=featureId).first()
+        userHasVoted = self.user in feature.usersVoted
+        if userHasVoted:
+            # Unvote
+            feature.votes -= 1
+            stringToReplace = feature.usersVoted
+            feature.usersVoted = stringToReplace.replace(self.user+",", "")
+        else:
+            # Vote
+            feature.votes += 1
+            feature.usersVoted += self.user+","
+
+        db.session.commit()
