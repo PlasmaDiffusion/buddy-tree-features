@@ -18,6 +18,7 @@ form,
   border-radius: 8px;
 
   width: 50%;
+  max-width: 250px;
   margin: auto;
 
   margin-top: 10px;
@@ -30,18 +31,24 @@ form {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
 
-  .votes,
-  button {
-    font-size: 18pt;
-  }
+.votes,
+button {
+  font-size: 18pt;
+}
 
-  .votes {
-    width: 30%;
-  }
+.votes {
+  width: 30%;
 }
 
 p {
   width: 80%;
-  font-size: 12pt;
+  font-size: 1rem;
+}
+
+@media screen and (max-width: 480px) {
+  p {
+    font-size: 0.8rem;
+  }
 }
