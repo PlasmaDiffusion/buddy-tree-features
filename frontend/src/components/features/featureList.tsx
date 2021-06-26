@@ -15,12 +15,10 @@ function FeatureList()
         getAllFeatures()
     }, [])
 
+
+
     //Use axios to send a get request of all features
     function getAllFeatures(){
-
-
-
-
         axios.get(createGetRequest()) 
         .then(res  => {
             console.log("Data", res.data["features"]);
@@ -28,7 +26,9 @@ function FeatureList()
         })
     }
 
-    //Vote (or unvote) for a feature
+
+
+    //Vote or unvote for a feature. (This gets called by a feature component)
     function updateVotes(featureID: number, index: number)
     {
         let user = getUserFromURL(true);
@@ -43,6 +43,9 @@ function FeatureList()
         
     }
 
+
+
+    
     return <React.Fragment>
         <FeatureInput onEntered={getAllFeatures} />
         <div className="featureList">

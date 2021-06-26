@@ -18,6 +18,9 @@ function FeatureInput(props:Props)
         setFeature(e.currentTarget.value)
     }
 
+
+    
+
     function addFeature(e: React.FormEvent<HTMLFormElement>)
     {
         e.preventDefault();
@@ -34,10 +37,12 @@ function FeatureInput(props:Props)
 
     }
 
+
+
     return <React.Fragment>
         <p id="inputPrompt">What new feature would you <br></br> like us to add to Buddytree?</p>
         <form onSubmit={addFeature}>
-           <textarea name="feature" rows={2} onChange={onChangeInput} value={feature} required></textarea>
+           <textarea name="feature" role="inputFeature" rows={2} onChange={onChangeInput} value={feature} required></textarea>
             <input type="submit" value="Add" />
         </form>
     </React.Fragment>

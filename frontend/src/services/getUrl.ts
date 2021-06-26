@@ -2,6 +2,7 @@
 export function getServerURL() : string
 {
 if (process.env.NODE_ENV == "development") return "http://127.0.0.1:5000/";
+else if (process.env.NODE_ENV == "test") return "";
 else return "https://buddy-tree-features.herokuapp.com/";
 }
 
@@ -18,7 +19,8 @@ if ((user=="" || user == null) && showUserPrompt) alert("Only users can vote for
 return user;
 
 }
-        
+
+//Make a string of getFeatures/ or getFeatures/<user>
 export function createGetRequest() : string
 {
     const user = getUserFromURL(false);
