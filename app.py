@@ -66,3 +66,7 @@ def voteForFeature():
         featureManager.voteForFeature(featureId, db)
 
         return {"features": featureManager.getAllFeatures()}
+
+
+if __name__ == '__main__':
+    app.run()
