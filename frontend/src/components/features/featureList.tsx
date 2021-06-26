@@ -21,7 +21,6 @@ function FeatureList()
     function getAllFeatures(){
         axios.get(createGetRequest()) 
         .then(res  => {
-            console.log("Data", res.data["features"]);
             setFeatures(res.data["features"]);
         })
     }
@@ -45,7 +44,7 @@ function FeatureList()
 
 
 
-    
+
     return <React.Fragment>
         <FeatureInput onEntered={getAllFeatures} />
         <div className="featureList">

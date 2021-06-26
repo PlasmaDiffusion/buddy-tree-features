@@ -17,9 +17,6 @@ class FeatureManager():
         featuresJSON = []
 
         for feature in features:
-            print(feature.description)
-
-            print(self.user, "", feature.users_voted)
 
             # While getting the feature, check if the user voted, or don't if no user was given
             if self.user:
