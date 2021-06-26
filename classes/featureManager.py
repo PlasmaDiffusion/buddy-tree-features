@@ -19,12 +19,12 @@ class FeatureManager():
         for feature in features:
             print(feature.description)
 
-            print(self.user, "", feature.usersVoted)
+            print(self.user, "", feature.users_voted)
 
             # While getting the feature, check if the user voted, or don't if no user was given
             if self.user:
                 featuresJSON.append({"id": feature.id, "description": feature.description,
-                                     "votes": feature.votes, "userVoted": self.user in feature.usersVoted})
+                                     "votes": feature.votes, "userVoted": self.user in feature.users_voted})
 
             else:
                 featuresJSON.append({"id": feature.id, "description": feature.description,
@@ -49,15 +49,15 @@ class FeatureManager():
 
         # Find the feature and check if the user voted for it prior
         feature = FeatureModel.query.filter_by(id=featureId).first()
-        userHasVoted = self.user in feature.usersVoted
+        userHasVoted = self.user in feature.users_voted
         if userHasVoted:
             # Unvote
             feature.votes -= 1
-            stringToReplace = feature.usersVoted
-            feature.usersVoted = stringToReplace.replace(self.user+",", "")
+            stringToReplace = feature.users_voted
+            feature.users_voted = stringToReplace.replace(self.user+",", "")
         else:
             # Vote
             feature.votes += 1
-            feature.usersVoted += self.user+","
+            feature.users_voted += self.user+","
 
         db.session.commit()

@@ -16,7 +16,7 @@ class FeatureModel(db.Model):
     def __init__(self, description):
         self.description = description
         self.votes = 0
-        self.usersVoted = ""
+        self.users_voted = ""
 
     def __repr__(self):
         return f"{self.description}:{self.votes}"
