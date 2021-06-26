@@ -1,13 +1,16 @@
 from flask import Flask, send_from_directory, request
 from flask_cors import CORS
 from flask_migrate import Migrate
+import os
+from os import environ
 from models import db, FeatureModel
 from classes.featureManager import FeatureManager
 
 app = Flask((__name__), static_url_path='', static_folder='frontend/build')
-CORS(app)  # Comment CORS on deployment, or uncomment when testing locally
+# CORS(app)  # Comment CORS on deployment, or uncomment when testing locally
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:1148@localhost:5432/buddytree"
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.DATABASE_URL
+# app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:1148@localhost:5432/buddytree" #Local host
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
