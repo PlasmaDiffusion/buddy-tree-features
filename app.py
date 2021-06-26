@@ -17,8 +17,9 @@ migrate = Migrate(app, db)
 
 
 # Render the built front end
-@ app.route("/<user>", defaults={'path': '', 'user': ''})
-def serve(path, user):
+@ app.route("/")
+@ app.route("/<user>")
+def serve():
     return send_from_directory(app.static_folder, 'index.html')
 
 
