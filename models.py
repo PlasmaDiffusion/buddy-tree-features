@@ -11,7 +11,7 @@ class FeatureModel(db.Model):
     votes = db.Column(db.Integer())
 
     # String that contains users who upvoted the feature separated by a ,
-    usersVoted = db.Column(db.String())
+    users_voted = db.Column(db.String())
 
     def __init__(self, description):
         self.description = description
