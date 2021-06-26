@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {getServerURL} from "../../services/getUrl"
+import {getServerURL, getUserFromURL} from "../../services/getUrl"
 import "./featureInput.scss";
 
 interface Props{
@@ -19,13 +19,13 @@ function FeatureInput(props:Props)
     }
 
 
-    
+
 
     function addFeature(e: React.FormEvent<HTMLFormElement>)
     {
         e.preventDefault();
         
-        if (feature == "") return;
+        if (feature == "" || getUserFromURL(true) == "") return;
 
         //Send the new feature to the database
         axios.post(getServerURL() +"addFeature", {description:feature})
