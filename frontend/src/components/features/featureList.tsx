@@ -45,11 +45,12 @@ function FeatureList()
 
     return <React.Fragment>
         <FeatureInput onEntered={getAllFeatures} />
+        <div className="featureList">
         {features ? features.map( (featureObj, index) =>(
             <Feature feature={featureObj} key={"Feature_"+index} index={index} onVote={updateVotes} />
             
         )) : ""}
-        
+        </div>
         </React.Fragment>
 }
 

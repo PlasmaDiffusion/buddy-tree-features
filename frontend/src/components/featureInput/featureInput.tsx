@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {getServerURL} from "../../services/getUrl"
-
+import "./featureInput.scss";
 
 interface Props{
     onEntered: ()=>void;
@@ -35,10 +35,10 @@ function FeatureInput(props:Props)
     }
 
     return <React.Fragment>
-        <p>What new feature would you like us to add to Buddytree?</p>
+        <p id="inputPrompt">What new feature would you <br></br> like us to add to Buddytree?</p>
         <form onSubmit={addFeature}>
            <textarea name="feature" rows={2} onChange={onChangeInput} value={feature} required></textarea>
-            <input type="submit" />
+            <input type="submit" value="Add" />
         </form>
     </React.Fragment>
 }

@@ -17,13 +17,13 @@ function Feature(props: Props) {
 
 
     return <React.Fragment>
-        <div>
+        <div className="feature">
             <p>{props.feature.description}</p>
             <button className={props.feature.userVoted ? "voteBtnVoted"  : "voteBtn"}
                 onClick={()=>{props.onVote(props.feature.id, props.index)}}>
             👍
             </button>
-            <p>{props.feature.votes}</p>
+            <p className="votes">{props.feature.votes}</p>
         </div>
     </React.Fragment>
 

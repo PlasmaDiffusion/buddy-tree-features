@@ -1,3 +1,4 @@
+//Voting
 .voteBtn {
   transform: scaleX(-1);
   border: none;
@@ -7,4 +8,40 @@
 .voteBtnVoted {
   @extend .voteBtn;
   color: blue;
+}
+
+//Boxes
+form,
+.featureList {
+  background-color: rgb(238, 238, 238);
+  border: 4px solid black;
+  border-radius: 8px;
+
+  width: 50%;
+  margin: auto;
+
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.feature,
+form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .votes,
+  button {
+    font-size: 18pt;
+  }
+
+  .votes {
+    width: 30%;
+  }
+}
+
+p {
+  width: 80%;
+  font-size: 12pt;
 }
