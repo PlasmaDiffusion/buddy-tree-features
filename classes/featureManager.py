@@ -21,7 +21,7 @@ class FeatureManager():
             # While getting the feature, check if the user voted, or don't if no user was given
             if self.user:
                 featuresJSON.append({"id": feature.id, "description": feature.description,
-                                     "votes": feature.votes, "userVoted": self.user in feature.users_voted})
+                                     "votes": feature.votes, "userVoted": (self.user + ",") in feature.users_voted})
 
             else:
                 featuresJSON.append({"id": feature.id, "description": feature.description,
@@ -46,7 +46,7 @@ class FeatureManager():
 
         # Find the feature and check if the user voted for it prior
         feature = FeatureModel.query.filter_by(id=featureId).first()
-        userHasVoted = self.user in feature.users_voted
+        userHasVoted = (self.user + ",") in feature.users_voted
         if userHasVoted:
             # Unvote
             feature.votes -= 1
